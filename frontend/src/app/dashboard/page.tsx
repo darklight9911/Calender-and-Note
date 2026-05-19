@@ -81,7 +81,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {[
           { label: "Events This Month", value: events.length,   icon: Calendar, color: "text-ink-400",    bg: "bg-ink-400/10" },
           { label: "Upcoming",          value: upcoming.length, icon: Clock,    color: "text-amber-400",  bg: "bg-amber-400/10" },

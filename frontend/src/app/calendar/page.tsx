@@ -6,7 +6,7 @@ import { calendarApi, CalendarEvent, CalendarEventCreate, EventCategory } from "
 import { cn } from "@/lib/utils";
 import {
   ChevronLeft, ChevronRight, Plus, X, Send, Loader2,
-  Calendar, Sparkles, Trash2, Clock, Tag,
+  Calendar, Sparkles, Trash2, Clock, Tag, MessageSquare,
 } from "lucide-react";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -293,6 +293,8 @@ export default function CalendarPage() {
 
   // Confirm AI draft
   const [aiDraft, setAiDraft] = useState<CalendarEventCreate | null>(null);
+  // Mobile AI panel
+  const [showAIPanel, setShowAIPanel] = useState(false);
 
   const fetchEvents = useCallback(async () => {
     if (!user) return;
@@ -405,19 +407,28 @@ export default function CalendarPage() {
               <ChevronRight size={16} />
             </button>
           </div>
-          <button
-            onClick={() => { setEditEvent(undefined); setModalDate(new Date()); setShowModal(true); }}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-ink-400 hover:bg-ink-300 text-white text-xs font-semibold rounded-lg transition-all"
-          >
-            <Plus size={13} /> Add Event
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowAIPanel(true)}
+              className="lg:hidden flex items-center gap-1.5 px-3 py-1.5 border border-ink-400/40 text-ink-400 text-xs font-semibold rounded-lg transition-all hover:bg-ink-400/10"
+            >
+              <MessageSquare size={13} /> AI
+            </button>
+            <button
+              onClick={() => { setEditEvent(undefined); setModalDate(new Date()); setShowModal(true); }}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-ink-400 hover:bg-ink-300 text-white text-xs font-semibold rounded-lg transition-all"
+            >
+              <Plus size={13} /> Add
+            </button>
+          </div>
         </div>
 
         {/* Day headers */}
         <div className="grid grid-cols-7 border-b border-academic-border">
           {DAYS.map(d => (
             <div key={d} className="py-2 text-center text-xs font-semibold text-academic-subtle tracking-wide">
-              {d}
+              <span className="hidden sm:inline">{d}</span>
+              <span className="sm:hidden">{d[0]}</span>
             </div>
           ))}
         </div>
@@ -437,7 +448,7 @@ export default function CalendarPage() {
                 <div
                   key={day}
                   onClick={() => openCreate(day)}
-                  className="border-r border-b border-academic-border/50 min-h-[90px] p-1.5 cursor-pointer hover:bg-academic-card/40 transition-colors group"
+                  className="border-r border-b border-academic-border/50 min-h-[56px] md:min-h-[90px] p-1 md:p-1.5 cursor-pointer hover:bg-academic-card/40 transition-colors group"
                 >
                   <span className={cn(
                     "inline-flex w-6 h-6 rounded-full items-center justify-center text-xs font-medium mb-1",
@@ -472,10 +483,36 @@ export default function CalendarPage() {
         </div>
       </div>
 
-      {/* ── AI Chat Sidebar ─────────────────────────────────────────────────── */}
-      <div className="w-72 flex-shrink-0 border-l border-academic-border bg-academic-surface/30 flex flex-col">
+      {/* ── AI Chat Sidebar (desktop) ────────────────────────────────────────── */}
+      <div className="hidden lg:flex w-72 flex-shrink-0 border-l border-academic-border bg-academic-surface/30 flex-col">
         <AIChat onEventDraft={handleAIDraft} />
       </div>
+
+      {/* ── Mobile AI Panel ──────────────────────────────────────────────────── */}
+      {showAIPanel && (
+        <div className="lg:hidden fixed inset-0 z-50 flex flex-col justify-end" onClick={() => setShowAIPanel(false)}>
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+          <div
+            className="relative z-10 h-[75vh] bg-academic-card border-t border-academic-border rounded-t-2xl flex flex-col animate-slide-up"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-4 py-3 border-b border-academic-border">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 rounded-lg bg-ink-400/20 flex items-center justify-center">
+                  <Sparkles size={12} className="text-ink-400" />
+                </div>
+                <span className="text-sm font-semibold text-academic-text">AI Scheduler</span>
+              </div>
+              <button onClick={() => setShowAIPanel(false)} className="p-1.5 text-academic-subtle hover:text-academic-text rounded-lg transition-all">
+                <X size={16} />
+              </button>
+            </div>
+            <div className="flex-1 min-h-0">
+              <AIChat onEventDraft={(draft, msg) => { handleAIDraft(draft); setShowAIPanel(false); }} />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* AI Draft confirm banner */}
       {aiDraft && (

@@ -254,6 +254,7 @@ export default function NotesPage() {
   const [processing, setProcessing] = useState(false);
   const [hasDrawing, setHasDrawing] = useState(false);
   const [error, setError]       = useState<string | null>(null);
+  const [mobileTab, setMobileTab] = useState<"canvas" | "notes">("canvas");
 
   const fetchNotes = useCallback(async () => {
     if (!user) return;
@@ -308,10 +309,43 @@ export default function NotesPage() {
   }
 
   return (
-    <div className="flex h-[calc(100vh-60px)] overflow-hidden">
+    <div className="flex flex-col h-[calc(100vh-60px)] overflow-hidden">
+
+      {/* Mobile tab bar */}
+      <div className="md:hidden flex border-b border-academic-border bg-academic-surface/80 flex-shrink-0">
+        <button
+          onClick={() => setMobileTab("canvas")}
+          className={cn(
+            "flex-1 py-2.5 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors border-b-2",
+            mobileTab === "canvas"
+              ? "text-ink-400 border-ink-400"
+              : "text-academic-subtle border-transparent"
+          )}
+        >
+          <Pen size={12} /> Canvas
+        </button>
+        <button
+          onClick={() => setMobileTab("notes")}
+          className={cn(
+            "flex-1 py-2.5 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors border-b-2",
+            mobileTab === "notes"
+              ? "text-ink-400 border-ink-400"
+              : "text-academic-subtle border-transparent"
+          )}
+        >
+          <FileText size={12} /> Notes ({notes.length})
+        </button>
+      </div>
+
+      {/* Main content area */}
+      <div className="flex flex-1 min-h-0 overflow-hidden">
 
       {/* ── Notes Sidebar ────────────────────────────────────────────────── */}
-      <div className="w-72 flex-shrink-0 border-r border-academic-border bg-academic-surface/30 flex flex-col">
+      <div className={cn(
+        "flex-shrink-0 border-r border-academic-border bg-academic-surface/30 flex-col",
+        "hidden md:flex md:w-72",
+        mobileTab === "notes" ? "!flex w-full" : ""
+      )}>
         <div className="flex items-center gap-2 px-4 py-3 border-b border-academic-border">
           <FileText size={14} className="text-ink-400" />
           <span className="text-sm font-semibold text-academic-text">Saved Notes</span>
@@ -335,7 +369,10 @@ export default function NotesPage() {
       </div>
 
       {/* ── Canvas Main ──────────────────────────────────────────────────── */}
-      <div className="flex-1 flex flex-col p-4 gap-3 min-w-0 overflow-hidden">
+      <div className={cn(
+        "flex-1 flex-col p-4 gap-3 min-w-0 overflow-hidden",
+        mobileTab === "canvas" ? "flex" : "hidden md:flex"
+      )}>
 
         {/* Save bar */}
         <div className="flex items-center gap-3">
@@ -383,6 +420,7 @@ export default function NotesPage() {
         <p className="text-xs text-academic-subtle text-center">
           Draw, sketch, or write on the canvas above. Click <strong className="text-ink-400">Save &amp; Analyse</strong> to have Gemini transcribe and summarise your notes.
         </p>
+      </div>
       </div>
     </div>
   );
