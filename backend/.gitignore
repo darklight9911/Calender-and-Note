@@ -1,0 +1,67 @@
+# ── Virtual environment ────────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+.env/
+__pypackages__/
+
+# ── Secrets ────────────────────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+service-account*.json
+/tmp/canteen_env.yaml
+
+# ── Python cache ───────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+*.pyo
+*.pyd
+
+# ── Distribution / packaging ───────────────────────────────────────────────────
+dist/
+build/
+*.egg-info/
+*.egg
+MANIFEST
+.eggs/
+wheels/
+pip-wheel-metadata/
+
+# ── Testing ────────────────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.tox/
+.nox/
+nosetests.xml
+*.cover
+*.py,cover
+
+# ── Linting / type checking ────────────────────────────────────────────────────
+.ruff_cache/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pytype/
+
+# ── Logs ───────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── OS ─────────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── IDEs ───────────────────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo

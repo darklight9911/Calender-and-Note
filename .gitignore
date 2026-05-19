@@ -1,0 +1,41 @@
+# ── OS & editors ───────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ── Secrets & local config ─────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+service-account*.json
+*-service-account.json
+
+# ── Docker ─────────────────────────────────────────────────────────────────────
+.docker/
+
+# ── Firebase ───────────────────────────────────────────────────────────────────
+.firebase/
+.firebaserc.local
+
+# ── Logs ───────────────────────────────────────────────────────────────────────
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ── Temp / scratch ─────────────────────────────────────────────────────────────
+tmp/
+temp/
+.tmp/
