@@ -68,7 +68,7 @@ Students juggle exams, assignments, and study schedules across multiple subjects
 
 ## 3. Source Code
 
-**GitHub Repository:** *(add your repo URL here)*
+**GitHub Repository:** <https://github.com/darklight9911/Calender-and-Note>
 
 > The repository contains the complete monorepo:
 > - `backend/` — FastAPI service (Python 3.12, Beanie ODM, Gemini AI)
@@ -92,19 +92,24 @@ Students type a plain English scheduling request. Gemini parses it into a fully 
 
 ```python
 # backend/app/services/gemini_service.py
+prompt = (
+    f"Current timestamp: {now_ctx}\n"
+    f'Student request: "{message}"\n'
+    "Extract the scheduling intent and return a structured calendar event."
+)
 response = client.models.generate_content(
     model="gemini-2.5-flash",
-    contents=[message],
+    contents=prompt,
     config=types.GenerateContentConfig(
-        system_instruction=SCHEDULING_PROMPT,
+        system_instruction=CALENDAR_SYSTEM_INSTRUCTION,
         response_mime_type="application/json",
         response_schema=StructuredCalendarEvent,
-        temperature=0.2,
+        temperature=0.1,
     ),
 )
 ```
 
-The `StructuredCalendarEvent` schema enforces: `title`, `description`, `start_time` (ISO 8601), `end_time`, `category` (enum: Exam / Assignment / Study Session / Class / Other), and a `confirmation_message` the frontend displays to the user.
+The `StructuredCalendarEvent` schema enforces: `title`, `description`, `start_time` (ISO 8601), `end_time`, and `category` (enum: Exam / Assignment / Study Session / Class / Other). The route handler then composes a human-readable `confirmation_message` and returns both as a `CalendarChatResponse` for the frontend to display.
 
 **Input:** *"Remind me about my calculus assignment due Thursday at 11:59 PM"*
 **Output:** Structured JSON → draft event card with one-click confirmation
@@ -124,12 +129,12 @@ image_part = types.Part.from_bytes(data=image_bytes, mime_type="image/png")
 
 response = client.models.generate_content(
     model="gemini-2.5-flash",
-    contents=[image_part, "Analyse this academic note image."],
+    contents=[image_part, text_part],
     config=types.GenerateContentConfig(
-        system_instruction=NOTE_ANALYSIS_PROMPT,
+        system_instruction=NOTE_SYSTEM_INSTRUCTION,
         response_mime_type="application/json",
         response_schema=NoteAnalysisResponse,
-        temperature=0.3,
+        temperature=0.2,
     ),
 )
 ```

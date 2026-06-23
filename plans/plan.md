@@ -1,3 +1,13 @@
+> ⚠️ **SUPERSEDED — historical record.** This is the *original* master prompt for a
+> "Smart Campus Canteen" food-ordering app (PostgreSQL/SQLAlchemy, menu/cart/orders, an
+> AI nutritionist). **The project later pivoted to StudyMind, an AI Academic Helper**
+> (MongoDB/Beanie, calendar + canvas notes). The pivot blueprint is in
+> [`new_plan.md`](new_plan.md); the implemented system is documented in
+> [`PROJECT.md`](PROJECT.md), [`SUBMISSION.md`](SUBMISSION.md), and the root `README.md`.
+> Nothing below reflects the current codebase — it is kept only as a design-history artifact.
+
+---
+
 Here is a comprehensive, professional Master Development Prompt. You can copy and paste this directly into an AI coding assistant (like Project IDX, Cursor, or Gemini) to generate the structural framework and core logic for your application.
 Master Development Prompt: Smart Campus Canteen Management System
 1. Project Overview & System Role

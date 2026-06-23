@@ -1,3 +1,13 @@
+> ⚠️ **SUPERSEDED — historical record.** This document specifies an "AI nutritionist
+> concierge" for the abandoned **Campus Canteen** concept (allergen filtering, calorie
+> budgeting, click-to-cart meal recommendations). **None of it was built.** The project
+> pivoted to **StudyMind**, where Gemini instead powers two academic features:
+> natural-language calendar scheduling and handwritten canvas-note OCR/summarisation
+> (see [`new_plan.md`](new_plan.md) and [`SUBMISSION.md`](SUBMISSION.md)). Kept only as a
+> design-history artifact.
+
+---
+
 To ensure your AI concierge feels like an organic, premium layer of a modern food ordering application rather than an isolated, generic chat window, the chatbot agent needs a specific set of tailored features.
 Dividing these features into three core pillars—Health & Safety, E-commerce Integration, and Conversational Intelligence—will make the application highly functional and intuitive:
 1. Health & Safety Guardrails

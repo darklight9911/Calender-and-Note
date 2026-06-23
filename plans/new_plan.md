@@ -1,3 +1,13 @@
+> 📌 **Design record — the pivot to StudyMind.** This document captured the decision to
+> drop the Campus Canteen concept (see [`plan.md`](plan.md)) in favour of an **AI Academic
+> Helper**: a smart calendar and a canvas note board. The *features* below match what was
+> built. **One difference from the final implementation:** the SQLAlchemy/PostgreSQL schema
+> shown here was the initial plan — the shipped backend uses **MongoDB + Beanie ODM**
+> (documents `UserProfile`, `CalendarEvent`, `AcademicNote`). For the as-built system see
+> [`PROJECT.md`](PROJECT.md), [`SUBMISSION.md`](SUBMISSION.md), and the root `README.md`.
+
+---
+
 Pivot noted! Shifting the focus to an AI Academic Helper works beautifully with your chosen stack. Next.js is perfect for interactive components like digital calendars and canvas layouts, FastAPI handles the background processing pipelines, and Gemini 1.5/2.5 Flash models are ideal for multi-modal processing (like reading hand-drawn notes) and high-speed text summarization.
 Here is the updated blueprint, features, and the master system prompt designed specifically for this new architecture.
 The Core Feature Ecosystem
